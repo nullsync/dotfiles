@@ -11,9 +11,8 @@ export ZSH ZSH_AUTOSUGGEST_USE_ASYNC=1
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vi="nvim"
+# alias vi="nvim"
 alias grep="`which grep` --color=auto"
-alias oni2="/Applications/Onivim2.app/Contents/MacOS/Oni2"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -80,3 +79,7 @@ export CPPFLAGS="-I/opt/homebrew/opt/krb5/include"
 
 export PKG_CONFIG_PATH="/opt/homebrew/opt/krb5/lib/pkgconfig"
 
+if type rg &> /dev/null; then
+	export FZF_DEFAULT_COMMAND='rg --files'
+	export FZF_DEFAULT_OPTS='-m --height 50% --border'
+fi
