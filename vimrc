@@ -1,5 +1,5 @@
 set nocompatible
-" set encoding=utf-8
+set encoding=UTF-8
 set ttyfast
 set t_Co=256
 set gcr=a:blinkon0              "Disable cursor blink
@@ -13,6 +13,7 @@ Plug 'simeji/winresizer'
 Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 " end packages
