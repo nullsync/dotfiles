@@ -4,6 +4,13 @@ set ttyfast
 set t_Co=256
 set gcr=a:blinkon0              "Disable cursor blink
 
+" set ttimeout for faster cursor changes
+set ttimeout
+set ttimeoutlen=100
+
+set showcmd
+set wildmenu
+
 " packages
 call plug#begin('~/.vim/plugged')
 
@@ -14,6 +21,7 @@ Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-loc
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'ryanoasis/vim-devicons'
+Plug 'easymotion/vim-easymotion'
 
 call plug#end()
 " end packages
@@ -56,6 +64,12 @@ let mapleader = "\<Space>"
 map <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <leader>o :Files<CR>
 nnoremap <silent> <Leader>O :Rg<CR>
+
+map s <Plug>(easymotion-sn)
+omap s <Plug>(easymotion-sn)
+
+map n <Plug>(easymotion-next)
+map N <Plug>(easymotion-next)
 
 " plugin options
 let NERDTreeHijackNetrw=1
