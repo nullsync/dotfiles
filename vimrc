@@ -26,6 +26,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'ryanoasis/vim-devicons'
 Plug 'easymotion/vim-easymotion'
 Plug 'arzg/vim-colors-xcode'
+Plug 'machakann/vim-highlightedyank'
 
 call plug#end()
 " end packages
@@ -61,6 +62,8 @@ set ignorecase
 set smartcase
 set cursorline
 set nofoldenable
+
+let g:highlightedyank_highlight_duration = 1000
 
 " key mappings 
 let mapleader = "\<Space>"
