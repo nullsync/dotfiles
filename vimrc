@@ -11,6 +11,9 @@ set ttimeoutlen=100
 set showcmd
 set wildmenu
 
+set number
+set clipboard=unnamed
+
 " packages
 call plug#begin('~/.vim/plugged')
 
@@ -22,12 +25,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'ryanoasis/vim-devicons'
 Plug 'easymotion/vim-easymotion'
+Plug 'arzg/vim-colors-xcode'
 
 call plug#end()
 " end packages
 
 syntax enable
 colorscheme dracula
+" colorscheme xcodedark
 
 set smartindent
 set autoindent
@@ -38,8 +43,6 @@ set autoread
 
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
-
-set nonumber
 
 " no editor files
 set nobackup
@@ -64,6 +67,7 @@ let mapleader = "\<Space>"
 map <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <leader>o :Files<CR>
 nnoremap <silent> <Leader>O :Rg<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
 
 map s <Plug>(easymotion-sn)
 omap s <Plug>(easymotion-sn)
@@ -101,6 +105,16 @@ else
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
+set guifont=FiraCodeNerdFontComplete-Light:h18
+set guioptions=
+
 " Kills Trailing Whitespaces
 " command! KillWhitespace :normal :%s/ *$//g<cr><c-o><cr>
 
+:set list listchars=tab:>-,trail:.,extends:>
+" Enter the middle-dot by pressing Ctrl-k then .M
+:set list listchars=tab:\|_,trail:·
+" Enter the right-angle-quote by pressing Ctrl-k then >>
+:set list listchars=tab:»·,trail:·
+" Enter the Pilcrow mark by pressing Ctrl-k then PI
+" :set list listchars=tab:>-,eol:¶

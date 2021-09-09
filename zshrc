@@ -7,12 +7,23 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="clean"
 
 export ZSH ZSH_AUTOSUGGEST_USE_ASYNC=1
+export HISTFILESIZE=1000000000
+export HISTSIZE=1000000000
+
+setopt INC_APPEND_HISTORY
+export HISTTIMEFORMAT="[%F %T] "
+
+setopt EXTENDED_HISTORY
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # alias vi="nvim"
 alias grep="`which grep` --color=auto"
+alias pip=pip3
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -45,6 +56,7 @@ unsetopt share_history
 
 # minic osx open in linux
 # alias open=xdg-open
+
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$HOME/bin:$PATH"
@@ -80,6 +92,21 @@ export CPPFLAGS="-I/opt/homebrew/opt/krb5/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/krb5/lib/pkgconfig"
 
 if type rg &> /dev/null; then
-	export FZF_DEFAULT_COMMAND='rg --files'
-	export FZF_DEFAULT_OPTS='-m --height 50% --border'
+  export FZF_DEFAULT_COMMAND='rg --files'
+  export FZF_DEFAULT_OPTS='-m --height 50% --border'
 fi
+
+export PATH="/usr/local/opt/python@3.8/bin:$PATH"
+
+export LOCALSTACK_API_KEY=2k64SvR3Ti
+export LOCALSTACK_LAMBDA_EXECUTOR=docker-reuse
+export LOCALSTACK_LAMBDA_REMOTE_DOCKER=false
+# export TMPDIR=/private$TMPDIR
+# export HOST_TMP_FOLDER=${TMPDIR}
+export TMPDIR=/Users/jvowell/tmp
+export HOST_TMP_FOLDER=${TMPDIR}
+
+export LOCALSTACK_SERVICES=rds,rds-data,s3,lambda,apigateway,iam,ssm,cloudwatch,secretsmanager
+export LS_LOG=trace
+export AWS_ACCESS_KEY_ID=test
+export AWS_SECRET_ACCESS_KEY=test
