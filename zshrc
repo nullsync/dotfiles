@@ -42,11 +42,12 @@ COMPLETION_WAITING_DOTS="true"
 # ZSH_COLORIZE_STYLE="colorful"
 # ZSH_COLORIZE_TOOL=chroma
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(aws git textmate ruby lighthouse)
-#plugins=(tmux colorize aws vi-mode zsh-autosuggestions)
-plugins=(colorize aws vi-mode)
+plugins=(
+	colorize
+	aws
+	vi-mode
+)
+
 source $ZSH/oh-my-zsh.sh
 
 # alias ls="ls -haltrG"
