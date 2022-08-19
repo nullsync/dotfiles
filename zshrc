@@ -77,37 +77,6 @@ setopt histignorespace           # skip cmds w/ leading space from history
 export HSTR_CONFIG=hicolor       # get more colors
 bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
 
-bindkey '^ ' autosuggest-accept
+# bindkey '^ ' autosuggest-accept
 
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
 
-export PKG_CONFIG_PATH="/opt/homebrew/opt/ruby/lib/pkgconfig"
-export PATH="/opt/homebrew/opt/krb5/bin:$PATH"
-export PATH="/opt/homebrew/opt/krb5/sbin:$PATH"
-
-export LDFLAGS="-L/opt/homebrew/opt/krb5/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/krb5/include"
-
-export PKG_CONFIG_PATH="/opt/homebrew/opt/krb5/lib/pkgconfig"
-
-if type rg &> /dev/null; then
-  export FZF_DEFAULT_COMMAND='rg --files'
-  export FZF_DEFAULT_OPTS='-m --height 50% --border'
-fi
-
-export PATH="/usr/local/opt/python@3.8/bin:$PATH"
-
-export LOCALSTACK_API_KEY=2k64SvR3Ti
-export LOCALSTACK_LAMBDA_EXECUTOR=docker-reuse
-export LOCALSTACK_LAMBDA_REMOTE_DOCKER=false
-# export TMPDIR=/private$TMPDIR
-# export HOST_TMP_FOLDER=${TMPDIR}
-export TMPDIR=/Users/jvowell/tmp
-export HOST_TMP_FOLDER=${TMPDIR}
-
-export LOCALSTACK_SERVICES=rds,rds-data,s3,lambda,apigateway,iam,ssm,cloudwatch,secretsmanager
-export LS_LOG=trace
-export AWS_ACCESS_KEY_ID=test
-export AWS_SECRET_ACCESS_KEY=test

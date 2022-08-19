@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "coc-json": ">=1.6.1",
+    "coc-marketplace": ">=1.9.0",
+    "coc-svelte": ">=0.4.2",
+    "coc-tsserver": ">=1.11.3"
+  }
+}
