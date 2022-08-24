@@ -21,7 +21,7 @@ setopt HIST_IGNORE_ALL_DUPS
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-# alias vi="nvim"
+alias vi="nvim"
 alias grep="`which grep` --color=auto"
 alias pip=pip3
 
@@ -77,6 +77,6 @@ setopt histignorespace           # skip cmds w/ leading space from history
 export HSTR_CONFIG=hicolor       # get more colors
 bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
 
-# bindkey '^ ' autosuggest-accept
+bindkey '^ ' autosuggest-accept
 
 

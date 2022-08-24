@@ -29,11 +29,14 @@ Plug 'liuchengxu/vista.vim'
 
 Plug 'tpope/vim-fugitive'
 
-Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'easymotion/vim-easymotion'
 Plug 'arzg/vim-colors-xcode'
 Plug 'machakann/vim-highlightedyank'
 Plug 't9md/vim-choosewin'
+
+Plug 'tanvirtin/vgit.nvim'
+Plug 'nvim-lua/plenary.nvim'
 
 call plug#end()
 " end packages
@@ -116,3 +119,32 @@ endif
 :set list listchars=tab:»·,trail:·
 " Enter the Pilcrow mark by pressing Ctrl-k then PI
 " :set list listchars=tab:>-,eol:¶
+
+" setup
+lua << EOF
+vim.o.updatetime = 300
+vim.o.incsearch = false
+vim.wo.signcolumn = 'yes'
+
+require('vgit').setup({
+  keymaps = {
+    ['n <C-k>'] = 'hunk_up',
+    ['n <C-j>'] = 'hunk_down',
+    ['n <leader>gs'] = 'buffer_hunk_stage',
+    ['n <leader>gr'] = 'buffer_hunk_reset',
+    ['n <leader>gp'] = 'buffer_hunk_preview',
+    ['n <leader>gb'] = 'buffer_blame_preview',
+    ['n <leader>gf'] = 'buffer_diff_preview',
+    ['n <leader>gh'] = 'buffer_history_preview',
+    ['n <leader>gu'] = 'buffer_reset',
+    ['n <leader>gg'] = 'buffer_gutter_blame_preview',
+    ['n <leader>glu'] = 'project_hunks_preview',
+    ['n <leader>gls'] = 'project_hunks_staged_preview',
+    ['n <leader>gd'] = 'project_diff_preview',
+    ['n <leader>gq'] = 'project_hunks_qf',
+    ['n <leader>gx'] = 'toggle_diff_preference',
+  }
+})
+
+EOF
+
