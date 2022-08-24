@@ -76,8 +76,8 @@ nnoremap <silent> <leader>b :Buffers<CR>
 map s <Plug>(easymotion-sn)
 omap s <Plug>(easymotion-sn)
 
-map n <Plug>(easymotion-next)
-map N <Plug>(easymotion-next)
+"map n <Plug>(easymotion-next)
+"map N <Plug>(easymotion-next)
 
 " plugin options
 let NERDTreeHijackNetrw=1
