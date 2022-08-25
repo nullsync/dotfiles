@@ -38,6 +38,9 @@ Plug 't9md/vim-choosewin'
 Plug 'tanvirtin/vgit.nvim'
 Plug 'nvim-lua/plenary.nvim'
 
+Plug 'mhartington/formatter.nvim'
+Plug 'mcauley-penney/tidy.nvim'
+
 call plug#end()
 " end packages
 
@@ -75,10 +78,10 @@ set nofoldenable
 
 let g:highlightedyank_highlight_duration = 1000
 
-" key mappings 
+" key mappings
 let mapleader = "\<Space>"
 map <leader>n :NERDTreeToggle<CR>
-map m :Vista<CR>
+map m :Vista!!<CR>
 nnoremap <silent> <leader>o :Files<CR>
 nnoremap <silent> <Leader>O :Rg<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
@@ -92,6 +95,11 @@ nmap <silent><leader>w <Plug>(choosewin)
 
 map s <Plug>(easymotion-sn)
 omap s <Plug>(easymotion-sn)
+
+nnoremap <silent> <leader>f :Format<CR>
+nnoremap <silent> <leader>F :FormatWrite<CR>
+
+map <leader>r :NERDTreeFind<cr>
 
 " plugin options
 let NERDTreeHijackNetrw=1
@@ -125,6 +133,7 @@ lua << EOF
 vim.o.updatetime = 300
 vim.o.incsearch = false
 vim.wo.signcolumn = 'yes'
+vim.o.wildmenu = on
 
 require('vgit').setup({
   keymaps = {
@@ -132,19 +141,71 @@ require('vgit').setup({
     ['n <C-j>'] = 'hunk_down',
     ['n <leader>gs'] = 'buffer_hunk_stage',
     ['n <leader>gr'] = 'buffer_hunk_reset',
-    ['n <leader>gp'] = 'buffer_hunk_preview',
+    ['n <leader>vp'] = 'buffer_hunk_preview',
     ['n <leader>gb'] = 'buffer_blame_preview',
     ['n <leader>gf'] = 'buffer_diff_preview',
-    ['n <leader>gh'] = 'buffer_history_preview',
+    ['n <leader>vh'] = 'buffer_history_preview',
     ['n <leader>gu'] = 'buffer_reset',
     ['n <leader>gg'] = 'buffer_gutter_blame_preview',
     ['n <leader>glu'] = 'project_hunks_preview',
     ['n <leader>gls'] = 'project_hunks_staged_preview',
     ['n <leader>gd'] = 'project_diff_preview',
     ['n <leader>gq'] = 'project_hunks_qf',
-    ['n <leader>gx'] = 'toggle_diff_preference',
+    ['n <leader>vx'] = 'toggle_diff_preference',
   }
 })
 
-EOF
+require('tidy').setup()
 
+-- Utilities for creating configurations
+local util = require "formatter.util"
+
+-- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
+require("formatter").setup {
+  -- Enable or disable logging
+  logging = true,
+  -- Set the log level
+  log_level = vim.log.levels.WARN,
+  -- All formatter configurations are opt-in
+  filetype = {
+    -- Formatter configurations for filetype "lua" go here
+    -- and will be executed in order
+    lua = {
+      -- "formatter.filetypes.lua" defines default configurations for the
+      -- "lua" filetype
+      require("formatter.filetypes.lua").stylua,
+
+      -- You can also define your own configuration
+      function()
+        -- Supports conditional formatting
+        if util.get_current_buffer_file_name() == "special.lua" then
+          return nil
+        end
+
+        -- Full specification of configurations is down below and in Vim help
+        -- files
+        return {
+          exe = "stylua",
+          args = {
+            "--search-parent-directories",
+            "--stdin-filepath",
+            util.escape_path(util.get_current_buffer_file_path()),
+            "--",
+            "-",
+          },
+          stdin = true,
+        }
+      end
+    },
+
+    -- Use the special "*" filetype for defining formatter configurations on
+    -- any filetype
+    ["*"] = {
+      -- "formatter.filetypes.any" defines default configurations for any
+      -- filetype
+      require("formatter.filetypes.any").remove_trailing_whitespace
+    }
+  }
+}
+
+EOF
