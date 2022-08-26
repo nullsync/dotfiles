@@ -4,6 +4,11 @@ set ttyfast
 set t_Co=256
 set gcr=a:blinkon0              "Disable cursor blink
 
+# neovim cursor
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+  \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+  \,sm:block-blinkwait175-blinkoff150-blinkon175
+
 " set ttimeout for faster cursor changes
 set ttimeout
 set ttimeoutlen=100
@@ -109,16 +114,6 @@ let g:choosewin_blink_on_land = 1
 let g:choosewin_statusline_replace = 1
 let g:choosewin_tabline_replace    = 1
 let g:choosewin_overlay_enable = 1
-
-if exists('$TMUX')
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
 
 :set list listchars=tab:>-,trail:.,extends:>
 " Enter the middle-dot by pressing Ctrl-k then .M
