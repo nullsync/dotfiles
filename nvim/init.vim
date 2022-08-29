@@ -46,6 +46,8 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'mhartington/formatter.nvim'
 Plug 'mcauley-penney/tidy.nvim'
 
+Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
+
 call plug#end()
 " end packages
 
@@ -134,19 +136,28 @@ require('vgit').setup({
   keymaps = {
     ['n <C-k>'] = 'hunk_up',
     ['n <C-j>'] = 'hunk_down',
-    ['n <leader>gs'] = 'buffer_hunk_stage',
-    ['n <leader>gr'] = 'buffer_hunk_reset',
+    ['n <leader>vs'] = 'buffer_hunk_stage',
+    ['n <leader>vr'] = 'buffer_hunk_reset',
     ['n <leader>vp'] = 'buffer_hunk_preview',
-    ['n <leader>gb'] = 'buffer_blame_preview',
-    ['n <leader>gf'] = 'buffer_diff_preview',
+    ['n <leader>vb'] = 'buffer_blame_preview',
+    ['n <leader>vf'] = 'buffer_diff_preview',
     ['n <leader>vh'] = 'buffer_history_preview',
-    ['n <leader>gu'] = 'buffer_reset',
-    ['n <leader>gg'] = 'buffer_gutter_blame_preview',
-    ['n <leader>glu'] = 'project_hunks_preview',
-    ['n <leader>gls'] = 'project_hunks_staged_preview',
-    ['n <leader>gd'] = 'project_diff_preview',
-    ['n <leader>gq'] = 'project_hunks_qf',
+    ['n <leader>vu'] = 'buffer_reset',
+    ['n <leader>vg'] = 'buffer_gutter_blame_preview',
+    ['n <leader>vlu'] = 'project_hunks_preview',
+    ['n <leader>vls'] = 'project_hunks_staged_preview',
+    ['n <leader>vd'] = 'project_diff_preview',
+    ['n <leader>vq'] = 'project_hunks_qf',
     ['n <leader>vx'] = 'toggle_diff_preference',
+  },
+  live_gutter = {
+    enabled = true,
+    edge_navigation = true,
+  },
+  settings = {
+    scene = {
+      diff_preference = 'split',
+    }
   }
 })
 
@@ -203,4 +214,5 @@ require("formatter").setup {
   }
 }
 
+  require("toggleterm").setup()
 EOF
