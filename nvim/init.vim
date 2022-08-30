@@ -27,7 +27,6 @@ Plug 'dracula/vim'
 Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
 Plug 'simeji/winresizer'
-Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'liuchengxu/vista.vim'
@@ -48,12 +47,38 @@ Plug 'mcauley-penney/tidy.nvim'
 
 Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 
+Plug 'neovim/nvim-lspconfig' " https://github.com/neovim/nvim-lspconfig
+Plug 'hrsh7th/nvim-cmp' " Autocompletion plugin
+Plug 'hrsh7th/cmp-nvim-lsp' " LSP source for nvim-cmp
+Plug 'saadparwaiz1/cmp_luasnip' " Snippets source for nvim-cmp
+Plug 'L3MON4D3/LuaSnip' " Snippets plugin
+
+Plug 'RRethy/vim-illuminate'
+
+if has('nvim')
+  function! UpdateRemotePlugins(...)
+    " Needed to refresh runtime files
+    let &rtp=&rtp
+    UpdateRemotePlugins
+  endfunction
+
+  Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+else
+  Plug 'gelguy/wilder.nvim'
+
+  " To use Python remote plugin features in Vim, can be skipped
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
 call plug#end()
 " end packages
 
+call wilder#setup({'modes': [':', '/', '?']})
+
 syntax enable
-colorscheme dracula
-" colorscheme xcodedark
+" colorscheme dracula
+colorscheme xcodedark
 
 set smartindent
 set autoindent
@@ -82,6 +107,8 @@ set ignorecase
 set smartcase
 set cursorline
 set nofoldenable
+
+set completeopt=menu,menuone,noselect
 
 let g:highlightedyank_highlight_duration = 1000
 
@@ -117,13 +144,16 @@ let g:choosewin_statusline_replace = 1
 let g:choosewin_tabline_replace    = 1
 let g:choosewin_overlay_enable = 1
 
-:set list listchars=tab:>-,trail:.,extends:>
+set list listchars=tab:>-,trail:.,extends:>
 " Enter the middle-dot by pressing Ctrl-k then .M
-:set list listchars=tab:\|_,trail:·
+set list listchars=tab:\|_,trail:·
 " Enter the right-angle-quote by pressing Ctrl-k then >>
-:set list listchars=tab:»·,trail:·
+set list listchars=tab:»·,trail:·
 " Enter the Pilcrow mark by pressing Ctrl-k then PI
-" :set list listchars=tab:>-,eol:¶
+" set list listchars=tab:>-,eol:¶
+"
+let g:vista_fzf_preview = ['right:50%']
+let g:vista#renderer#enable_icon = 1
 
 " setup
 lua << EOF
@@ -214,5 +244,101 @@ require("formatter").setup {
   }
 }
 
-  require("toggleterm").setup()
+require("toggleterm").setup()
+
+-- Add additional capabilities supported by nvim-cmp
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+local lspconfig = require('lspconfig')
+
+-- Enable some language servers with the additional completion capabilities offered by nvim-cmp
+local servers = { 'clangd', 'pyright', 'tsserver' }
+for _, lsp in ipairs(servers) do
+  lspconfig[lsp].setup {
+    -- on_attach = my_custom_on_attach,
+    capabilities = capabilities,
+  }
+end
+
+-- luasnip setup
+local luasnip = require 'luasnip'
+
+-- nvim-cmp setup
+local cmp = require 'cmp'
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }),
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  },
+}
+
+require('illuminate').configure({
+    -- providers: provider used to get references in the buffer, ordered by priority
+    providers = {
+        'lsp',
+        'treesitter',
+        'regex',
+    },
+    -- delay: delay in milliseconds
+    delay = 100,
+    -- filetype_overrides: filetype specific overrides.
+    -- The keys are strings to represent the filetype while the values are tables that
+    -- supports the same keys passed to .configure except for filetypes_denylist and filetypes_allowlist
+    filetype_overrides = {},
+    -- filetypes_denylist: filetypes to not illuminate, this overrides filetypes_allowlist
+    filetypes_denylist = {
+        'dirvish',
+        'fugitive',
+    },
+    -- filetypes_allowlist: filetypes to illuminate, this is overriden by filetypes_denylist
+    filetypes_allowlist = {},
+    -- modes_denylist: modes to not illuminate, this overrides modes_allowlist
+    modes_denylist = {},
+    -- modes_allowlist: modes to illuminate, this is overriden by modes_denylist
+    modes_allowlist = {},
+    -- providers_regex_syntax_denylist: syntax to not illuminate, this overrides providers_regex_syntax_allowlist
+    -- Only applies to the 'regex' provider
+    -- Use :echom synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+    providers_regex_syntax_denylist = {},
+    -- providers_regex_syntax_allowlist: syntax to illuminate, this is overriden by providers_regex_syntax_denylist
+    -- Only applies to the 'regex' provider
+    -- Use :echom synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+    providers_regex_syntax_allowlist = {},
+    -- under_cursor: whether or not to illuminate under the cursor
+    under_cursor = true,
+})
+
 EOF
