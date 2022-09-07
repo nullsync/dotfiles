@@ -42,10 +42,7 @@ Plug 't9md/vim-choosewin'
 Plug 'tanvirtin/vgit.nvim'
 Plug 'nvim-lua/plenary.nvim'
 
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'npm install --frozen-lockfile --production',
-  \ 'branch': 'release/0.x'
-  \ }
+Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
 
 Plug 'mcauley-penney/tidy.nvim'
 
@@ -150,8 +147,12 @@ map s <Plug>(easymotion-sn)
 omap s <Plug>(easymotion-sn)
 
 map <leader>r :NERDTreeFind<cr>
+map - :Explore<cr>
 
 " plugin options
+"let g:loaded_netrw       = 1
+"let g:loaded_netrwPlugin = 1
+
 let NERDTreeHijackNetrw=1
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 
