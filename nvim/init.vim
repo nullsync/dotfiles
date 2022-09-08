@@ -25,6 +25,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'dracula/vim'
 Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'preservim/nerdcommenter'
 Plug 'simeji/winresizer'
 Plug 'junegunn/fzf.vim'
@@ -33,7 +34,8 @@ Plug 'liuchengxu/vista.vim'
 
 Plug 'tpope/vim-fugitive'
 
-Plug 'kyazdani42/nvim-web-devicons'
+"Plug 'kyazdani42/nvim-web-devicons'
+Plug 'ryanoasis/vim-devicons'
 Plug 'easymotion/vim-easymotion'
 Plug 'arzg/vim-colors-xcode'
 Plug 'machakann/vim-highlightedyank'
@@ -147,11 +149,11 @@ map s <Plug>(easymotion-sn)
 omap s <Plug>(easymotion-sn)
 
 map <leader>r :NERDTreeFind<cr>
-map - :Explore<cr>
+map - :edit %:h<cr>
 
 " plugin options
-"let g:loaded_netrw       = 1
-"let g:loaded_netrwPlugin = 1
+let g:loaded_netrw       = 1
+let g:loaded_netrwPlugin = 1
 
 let NERDTreeHijackNetrw=1
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
