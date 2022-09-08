@@ -33,6 +33,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'liuchengxu/vista.vim'
 
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-endwise'
 
 "Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
@@ -48,7 +49,7 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --productio
 
 Plug 'mcauley-penney/tidy.nvim'
 
-Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
+Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 
 Plug 'hashivim/vim-terraform'
 
