@@ -80,3 +80,8 @@ bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode che
 bindkey '^ ' autosuggest-accept
 
 
+export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
