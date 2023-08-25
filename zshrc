@@ -85,3 +85,5 @@ export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
+
+export PATH="/opt/homebrew/opt/python@3.11/bin:$PATH"

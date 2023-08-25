@@ -74,6 +74,8 @@ Plug 'VonHeikemen/lsp-zero.nvim'
 
 Plug 'RRethy/vim-illuminate'
 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 if has('nvim')
   function! UpdateRemotePlugins(...)
     " Needed to refresh runtime files
