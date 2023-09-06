@@ -21,7 +21,7 @@ setopt HIST_IGNORE_ALL_DUPS
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vi="nvim"
+alias vi=nvim.appimage
 alias grep="`which grep` --color=auto"
 alias pip=pip3
 
@@ -63,6 +63,7 @@ unsetopt share_history
 export PATH="$HOME/bin:$PATH"
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:$PATH:$HOME/.emacs.d/bin"
 export PATH="/opt/homebrew/lib/ruby/gems/3.0.0/bin:$PATH"
+export PATH="$HOME/.opam/default/bin:$PATH"
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -79,11 +80,4 @@ bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode che
 
 bindkey '^ ' autosuggest-accept
 
-
-export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
-
-
-# Load Angular CLI autocompletion.
-source <(ng completion script)
-
-export PATH="/opt/homebrew/opt/python@3.11/bin:$PATH"
+CUSTOM_NVIM_PATH=~/bin/nvim.appimage
